@@ -4,208 +4,88 @@
 /* ===================== RESET ===================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ===================== BASE ===================== */
 html { font-size: 14px; }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: #1c2434;
-  background-color: #f4f6fa;
+  color: #1e293b;
+  background-color: #f8fafc;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===================== TYPOGRAPHY SCALE ===================== */
-/* Page title */
-.text-page-title   { font-size: 18px; font-weight: 600; color: #1c2434; line-height: 1.3; }
-/* Section title */
-.text-section-title{ font-size: 14px; font-weight: 600; color: #1c2434; }
-/* Body */
-.text-body         { font-size: 14px; font-weight: 400; color: #374151; }
-/* Secondary */
-.text-secondary    { font-size: 12px; font-weight: 400; color: #6b7280; }
-/* Label */
-.text-label        { font-size: 12px; font-weight: 500; color: #6b7280; }
-/* Caption */
-.text-caption      { font-size: 11px; font-weight: 400; color: #9ca3af; }
-/* Table header */
-.text-th           { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; }
-/* Metric value */
-.text-metric       { font-size: 24px; font-weight: 700; color: #1c2434; line-height: 1; }
+/* ===================== TYPOGRAPHY ===================== */
+h1, h2, h3, h4 { font-weight: 600; color: #0f172a; }
+.text-14 { font-size: 14px; }
+.text-12 { font-size: 12px; }
+.text-muted { color: #64748b; }
 
-/* ===================== SCROLLBAR ===================== */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
-
-/* ===================== CARDS ===================== */
+/* ===================== UI ELEMENTS ===================== */
 .card {
   background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04);
-}
-.card:hover {
-  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.08);
-  transition: box-shadow 0.2s ease;
-}
-
-/* ===================== SIDEBAR ===================== */
-.sidebar-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
   border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.65);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  width: 100%;
-  text-align: left;
-  border: none;
-  background: none;
-}
-.sidebar-nav-item:hover {
-  background: rgba(255,255,255,0.08);
-  color: #ffffff;
-}
-.sidebar-nav-item.active {
-  background: #c40014;
-  color: #ffffff;
-  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 24px;
 }
 
-/* ===================== BUTTONS ===================== */
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 16px;
   background: #c40014;
   color: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: 0.2s;
   border: none;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
-.btn-primary:hover { background: #a0000f; }
+.btn-primary:hover { background: #9e0010; }
 
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  background: #ffffff;
-  color: #374151;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.btn-secondary:hover { background: #f9fafb; border-color: #d1d5db; }
-
-/* ===================== INPUTS ===================== */
-.input-field {
-  width: 100%;
-  font-size: 13px;
-  font-family: 'Inter', sans-serif;
-  color: #1c2434;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 8px 12px;
-  outline: none;
-  transition: border 0.15s ease, box-shadow 0.15s ease;
-}
-.input-field:focus {
-  border-color: #c40014;
-  box-shadow: 0 0 0 3px rgba(196,0,20,0.08);
-}
-.input-field::placeholder { color: #9ca3af; }
-
-textarea.input-field { resize: vertical; line-height: 1.6; }
-
-/* ===================== BADGES ===================== */
 .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   padding: 2px 8px;
-  border-radius: 20px;
+  border-radius: 12px;
 }
-.badge-green  { background: #dcfce7; color: #15803d; }
-.badge-red    { background: #fee2e2; color: #b91c1c; }
-.badge-blue   { background: #dbeafe; color: #1d4ed8; }
-.badge-purple { background: #f3e8ff; color: #7e22ce; }
-.badge-amber  { background: #fef3c7; color: #92400e; }
-.badge-gray   { background: #f3f4f6; color: #4b5563; }
 
-/* ===================== STATUS DOT ===================== */
-.status-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
+/* ===================== DATA TABLE ===================== */
+table { width: 100%; border-collapse: collapse; }
+th {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
 }
-.status-dot.online  { background: #22c55e; box-shadow: 0 0 0 2px rgba(34,197,94,0.25); }
-.status-dot.offline { background: #9ca3af; }
-.status-dot.busy    { background: #f59e0b; }
+td {
+  font-size: 14px;
+  color: #1e293b;
+  padding: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
 
 /* ===================== TOGGLE ===================== */
 .toggle-switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .toggle-slider {
   position: absolute; cursor: pointer; inset: 0;
-  background: #d1d5db; border-radius: 22px; transition: 0.25s;
+  background: #cbd5e1; border-radius: 22px; transition: 0.2s;
 }
 .toggle-slider::before {
-  content: ''; position: absolute;
-  height: 16px; width: 16px;
-  left: 3px; top: 3px;
-  background: white; border-radius: 50%;
-  transition: 0.25s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  content: ''; position: absolute; height: 16px; width: 16px;
+  left: 3px; top: 3px; background: white; border-radius: 50%;
+  transition: 0.2s;
 }
 input:checked + .toggle-slider { background: #c40014; }
 input:checked + .toggle-slider::before { transform: translateX(18px); }
 
-/* ===================== TABLE ===================== */
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th {
-  font-size: 11px; font-weight: 600; color: #6b7280;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  padding: 10px 16px; background: #f9fafb;
-  text-align: left; border-bottom: 1px solid #e5e7eb;
-}
-.data-table td {
-  font-size: 13px; color: #374151;
-  padding: 11px 16px; border-bottom: 1px solid #f3f4f6;
-  vertical-align: middle;
-}
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tbody tr:hover { background: #f9fafb; }
-
-/* ===================== PAGE TRANSITION ===================== */
+/* Animation */
 .page-fade { animation: pageFadeIn 0.2s ease; }
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-/* ===================== LIVE PULSE ===================== */
-@keyframes livePulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
-}
-.live-pulse { animation: livePulse 2s ease-in-out infinite; }

@@ -6,38 +6,34 @@ import {
 
 const ICON_MAP = { PhoneCall, PhoneIncoming, Bot, Activity, ShieldCheck, Radio };
 
-const COLOR_CONFIG = {
-  blue:   { bg: '#eff6ff', icon: '#2563eb' },
-  green:  { bg: '#f0fdf4', icon: '#16a34a' },
-  purple: { bg: '#f5f3ff', icon: '#7c3aed' },
-  red:    { bg: '#fff1f2', icon: '#c40014' },
-  teal:   { bg: '#f0fdfa', icon: '#0d9488' },
-  orange: { bg: '#fff7ed', icon: '#ea580c' },
-};
-
-export default function StatCard({ label, value, delta, positive, icon, color }) {
+export default function StatCard({ label, value, delta, positive, icon }) {
   const Icon = ICON_MAP[icon] || Activity;
-  const cfg = COLOR_CONFIG[color] || COLOR_CONFIG.blue;
+
+  // Render neutral state if positive is null/offline
+  const deltaColor = positive === true ? '#16a34a' : positive === false ? '#dc2626' : '#64748b';
   const DeltaIcon = positive === true ? TrendingUp : positive === false ? TrendingDown : Minus;
-  const deltaColor = positive === true ? '#16a34a' : positive === false ? '#dc2626' : '#6b7280';
 
   return (
-    <div className="card" style={{ padding: '18px 20px' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14 }}>
-        <div style={{
-          width: 40, height: 40, borderRadius: 10,
-          background: cfg.bg,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-        }}>
-          <Icon size={18} color={cfg.icon} />
+    <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <div>
+          <p style={{ fontSize: '14px', fontWeight: 500, color: '#64748b', marginBottom: '8px' }}>
+            {label}
+          </p>
+          <p style={{ fontSize: '28px', fontWeight: 600, color: '#0f172a', lineHeight: 1 }}>
+            {value}
+          </p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: deltaColor }}>
-          <DeltaIcon size={12} />
-          <span style={{ fontSize: 12, fontWeight: 600 }}>{delta}</span>
+        <div style={{ padding: '8px', background: '#f8fafc', borderRadius: '8px' }}>
+          <Icon size={20} color="#64748b" />
         </div>
       </div>
-      <p style={{ fontSize: 22, fontWeight: 700, color: '#1c2434', lineHeight: 1, marginBottom: 6 }}>{value}</p>
-      <p style={{ fontSize: 12, color: '#6b7280', fontWeight: 500 }}>{label}</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: 'auto' }}>
+        <DeltaIcon size={14} color={deltaColor} />
+        <span style={{ fontSize: '12px', color: deltaColor, fontWeight: 500 }}>
+          {delta}
+        </span>
+      </div>
     </div>
   );
 }
