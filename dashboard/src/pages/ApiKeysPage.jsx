@@ -1,68 +1,98 @@
-import React from 'react';
-import { EyeOff, Plus, Trash2, RefreshCw } from 'lucide-react';
-import { apiKeys } from '../data/mockData';
+import React, { useState, useEffect } from 'react';
+import { Key, Save, CheckCircle } from 'lucide-react';
 
 export default function ApiKeysPage() {
+  const [keys, setKeys] = useState({ openai: '', livekit: '', sarvam: '' });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/config')
+      .then(res => res.json())
+      .then(data => {
+        if (data.api_keys) setKeys(data.api_keys);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await fetch('http://localhost:8000/api/config/apikeys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(keys)
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch (err) {
+      console.error(err);
+    }
+    setSaving(false);
+  };
+
+  if (loading) return <p>Loading configuration...</p>;
+
   return (
     <div className="page-fade" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <p style={{ fontSize: '14px', color: '#64748b' }}>
-          Manage API credentials for LLM, STT, TTS, and infrastructure services.
+          Manage API credentials. These keys are securely passed to the backend agent.
         </p>
-        <button className="btn-primary">
-          <Plus size={14} /> Add New Key
-        </button>
       </div>
 
-      <div className="card" style={{ padding: 0 }}>
-        <div style={{ padding: '24px', borderBottom: '1px solid #e2e8f0' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: 600, color: '#0f172a' }}>Active API Keys</h3>
+      <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        
+        <div>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '8px' }}>OpenAI API Key</label>
+          <input 
+            type="password" 
+            className="input-field" 
+            value={keys.openai} 
+            onChange={e => setKeys({...keys, openai: e.target.value})} 
+            placeholder="sk-..." 
+          />
         </div>
-        <div style={{ overflowX: 'auto' }}>
-          <table>
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>API Key</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {apiKeys.length > 0 ? (
-                apiKeys.map(k => (
-                  <tr key={k.id}>
-                    <td style={{ fontWeight: 500 }}>{k.name}</td>
-                    <td>
-                      <code style={{ fontSize: '12px', background: '#f1f5f9', padding: '4px 8px', borderRadius: '4px', fontFamily: 'monospace' }}>
-                        ••••••••••••••••
-                      </code>
-                    </td>
-                    <td><span className="badge badge-green">Active</span></td>
-                    <td>
-                      <div style={{ display: 'flex', gap: '12px' }}>
-                        <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }}><RefreshCw size={16} /></button>
-                        <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#dc2626' }}><Trash2 size={16} /></button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4" style={{ textAlign: 'center', padding: '48px', color: '#64748b', fontSize: '14px' }}>
-                    No API keys configured yet.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+
+        <div>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '8px' }}>LiveKit API Key</label>
+          <input 
+            type="password" 
+            className="input-field" 
+            value={keys.livekit} 
+            onChange={e => setKeys({...keys, livekit: e.target.value})} 
+            placeholder="API..." 
+          />
         </div>
+
+        <div>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#475569', marginBottom: '8px' }}>Sarvam AI API Key (STT/TTS)</label>
+          <input 
+            type="password" 
+            className="input-field" 
+            value={keys.sarvam} 
+            onChange={e => setKeys({...keys, sarvam: e.target.value})} 
+          />
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '16px', marginTop: '12px' }}>
+          {saved && <span style={{ fontSize: '13px', color: '#16a34a', display: 'flex', alignItems: 'center', gap: '4px' }}><CheckCircle size={14}/> Saved to Backend</span>}
+          <button className="btn-primary" onClick={handleSave} disabled={saving}>
+            <Save size={14} /> {saving ? "Saving..." : "Update Keys"}
+          </button>
+        </div>
+
       </div>
 
       <div className="card" style={{ background: '#f8fafc', border: '1px dashed #cbd5e1' }}>
         <p style={{ fontSize: '14px', fontWeight: 600, color: '#0f172a', marginBottom: '4px' }}>Security Best Practices</p>
-        <p style={{ fontSize: '12px', color: '#64748b' }}>Rotate API keys every 90 days. Never share keys in logs or commits. Use environment variables in production.</p>
+        <p style={{ fontSize: '12px', color: '#64748b' }}>Keys are updated dynamically on the backend. No restart required.</p>
       </div>
 
     </div>
