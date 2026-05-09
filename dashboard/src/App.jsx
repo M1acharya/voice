@@ -36,9 +36,10 @@ export default function App() {
       />
 
       {/* Main content — offset by sidebar width on large screens */}
-      <div className="lg:pl-[240px] min-h-screen flex flex-col">
+      <div className="lg:pl-60 min-h-screen flex flex-col">
         <Header
           activePage={activePage}
+          onNavigate={setActivePage}
           onMobileMenuOpen={() => setMobileOpen(true)}
         />
         <main className="flex-1 p-4 sm:p-6">

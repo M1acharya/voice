@@ -18,7 +18,7 @@ const notifications = [
   { id: 4, text: 'API Health check passed – All systems normal', time: '1 hr ago', unread: false },
 ];
 
-export default function Header({ activePage, onMobileMenuOpen }) {
+export default function Header({ activePage, onNavigate, onMobileMenuOpen }) {
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const notifRef = useRef(null);
@@ -164,17 +164,26 @@ export default function Header({ activePage, onMobileMenuOpen }) {
                 <p style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>admin@offineeds.com</p>
               </div>
               {[
-                { icon: User, label: 'My Profile' },
-                { icon: Settings, label: 'Settings' },
-                { icon: PhoneCall, label: 'Agent Logs' },
-              ].map(({ icon: Icon, label }) => (
-                <button key={label} style={{
-                  width: '100%', display: 'flex', alignItems: 'center', gap: 10,
-                  padding: '9px 16px', fontSize: 13, color: '#374151', fontWeight: 400,
-                  background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left'
-                }}
-                onMouseEnter={e => e.currentTarget.style.background = '#f9fafb'}
-                onMouseLeave={e => e.currentTarget.style.background = 'none'}>
+                { id: 'profile', icon: User, label: 'My Profile' },
+                { id: 'settings', icon: Settings, label: 'Settings' },
+                { id: 'live-calls', icon: PhoneCall, label: 'Agent Logs' },
+              ].map(({ id, icon: Icon, label }) => (
+                <button 
+                  key={label} 
+                  onClick={() => {
+                    if (id === 'settings' || id === 'live-calls') {
+                      onNavigate(id);
+                    }
+                    setProfileOpen(false);
+                  }}
+                  style={{
+                    width: '100%', display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '9px 16px', fontSize: 13, color: '#374151', fontWeight: 400,
+                    background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#f9fafb'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                >
                   <Icon size={14} color="#9ca3af" /> {label}
                 </button>
               ))}
