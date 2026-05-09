@@ -36,7 +36,7 @@ export default function App() {
       />
 
       {/* Main content — offset by sidebar width on large screens */}
-      <div className="lg:pl-64 min-h-screen flex flex-col">
+      <div className="lg:pl-[240px] min-h-screen flex flex-col">
         <Header
           activePage={activePage}
           onMobileMenuOpen={() => setMobileOpen(true)}

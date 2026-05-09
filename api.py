@@ -40,6 +40,9 @@ class AdminUpdate(BaseModel):
     username: str
     password: str
 
+class AgentControlsUpdate(BaseModel):
+    voice_speaker: str
+
 @app.get("/api/config")
 def get_config():
     return read_config()
@@ -72,3 +75,10 @@ def update_admin(data: AdminUpdate):
     config["admin"]["password"] = data.password
     write_config(config)
     return {"status": "success", "message": "Admin credentials updated successfully"}
+
+@app.post("/api/config/agent")
+def update_agent_controls(data: AgentControlsUpdate):
+    config = read_config()
+    config["voice_speaker"] = data.voice_speaker
+    write_config(config)
+    return {"status": "success", "message": "Agent controls updated successfully"}
