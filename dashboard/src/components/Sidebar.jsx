@@ -99,7 +99,7 @@ export default function Sidebar({ activePage, onNavigate, isMobileOpen, onMobile
         </div>
 
         {/* Navigation */}
-        <nav style={{ flex: 1, overflowY: 'auto', padding: '20px 12px' }}>
+        <nav className="sidebar-scroll" style={{ flex: 1, overflowY: 'auto', padding: '20px 12px', minHeight: 0 }}>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {MENU_GROUPS.map(group => {
