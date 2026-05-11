@@ -18,7 +18,7 @@ const notifications = [
   { id: 4, text: 'API Health check passed – All systems normal', time: '1 hr ago', unread: false },
 ];
 
-export default function Header({ activePage, onNavigate, onMobileMenuOpen }) {
+export default function Header({ activePage, onNavigate, onMobileMenuOpen, onToggleSidebar }) {
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const notifRef = useRef(null);
@@ -46,8 +46,16 @@ export default function Header({ activePage, onNavigate, onMobileMenuOpen }) {
       padding: '0 24px', gap: 16
     }}>
       {/* Hamburger */}
-      <button onClick={onMobileMenuOpen} className="lg:hidden"
-        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, color: '#6b7280', borderRadius: 6 }}>
+      <button 
+        onClick={() => {
+          if (window.innerWidth >= 1024) {
+            onToggleSidebar();
+          } else {
+            onMobileMenuOpen();
+          }
+        }} 
+        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, color: '#6b7280', borderRadius: 6 }}
+      >
         <Menu size={20} />
       </button>
 

@@ -35,7 +35,7 @@ const MENU_GROUPS = [
   }
 ];
 
-export default function Sidebar({ activePage, onNavigate, isMobileOpen, onMobileClose }) {
+export default function Sidebar({ activePage, onNavigate, isMobileOpen, onMobileClose, isCollapsed }) {
   // Keep all groups expanded by default
   const [expanded, setExpanded] = useState({
     'grp-dashboard': true,
@@ -67,10 +67,12 @@ export default function Sidebar({ activePage, onNavigate, isMobileOpen, onMobile
         background: '#1c2434',
         display: 'flex', flexDirection: 'column',
         zIndex: 30,
-        transform: isMobileOpen ? 'translateX(0)' : undefined,
-        transition: 'transform 0.25s ease',
+        transition: 'transform 0.3s ease',
       }}
-      className={isMobileOpen ? '' : 'max-lg:-translate-x-full'}
+      className={`
+        ${isMobileOpen ? 'translate-x-0' : 'max-lg:-translate-x-full'}
+        ${isCollapsed ? 'lg:-translate-x-full' : 'lg:translate-x-0'}
+      `}
       >
         {/* Logo */}
         <div style={{

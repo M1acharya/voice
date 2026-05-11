@@ -22,6 +22,7 @@ const PAGES = {
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const PageComponent = PAGES[activePage] || DashboardPage;
 
@@ -33,14 +34,16 @@ export default function App() {
         onNavigate={setActivePage}
         isMobileOpen={mobileOpen}
         onMobileClose={() => setMobileOpen(false)}
+        isCollapsed={sidebarCollapsed}
       />
 
       {/* Main content — offset by sidebar width on large screens */}
-      <div className="lg:pl-60 min-h-screen flex flex-col">
+      <div className={`min-h-screen flex flex-col transition-all duration-300 ${sidebarCollapsed ? 'lg:pl-0' : 'lg:pl-60'}`}>
         <Header
           activePage={activePage}
           onNavigate={setActivePage}
           onMobileMenuOpen={() => setMobileOpen(true)}
+          onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
         <main className="flex-1 p-4 sm:p-6">
           <PageComponent key={activePage} />
