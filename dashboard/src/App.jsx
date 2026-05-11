@@ -38,7 +38,7 @@ export default function App() {
       />
 
       {/* Main content — offset by sidebar width on large screens */}
-      <div className={`min-h-screen flex flex-col transition-all duration-300 ${sidebarCollapsed ? 'lg:pl-0' : 'lg:pl-60'}`}>
+      <div className={`min-h-screen flex flex-col transition-all duration-300 ${sidebarCollapsed ? 'layout-full' : 'layout-padded'}`}>
         <Header
           activePage={activePage}
           onNavigate={setActivePage}
